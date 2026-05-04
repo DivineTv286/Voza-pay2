@@ -16,6 +16,7 @@
             --voza-card: #150b2e;
             --voza-glass: rgba(255, 255, 255, 0.05);
             --voza-red: #ff4757;
+            --voza-border: rgba(219, 180, 69, 0.3);
         }
 
         body {
@@ -38,7 +39,6 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        /* Timer Style */
         .timer-box {
             background: rgba(225, 29, 72, 0.1);
             color: #e11d48;
@@ -54,26 +54,73 @@
         .header h1 { font-size: 20px; font-weight: 800; margin-bottom: 5px; }
         .price-tag { font-size: 28px; font-weight: 900; color: var(--voza-gold); }
         .old-price { text-decoration: line-through; color: #71717a; font-size: 16px; margin-left: 10px; }
-        .bank-card {
-            background: var(--voza-glass);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 20px;
-            margin: 20px 0;
+        
+        /* IMPROVED BANK CARD DISPLAY */
+        .bank-details-container {
+            margin: 25px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
-        .detail-row {
+
+        .info-tile {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--voza-border);
+            border-radius: 16px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            transition: all 0.3s ease;
         }
-        .detail-row:last-child { margin-bottom: 0; }
-        .label { font-size: 11px; color: #a1a1aa; text-transform: uppercase; letter-spacing: 1px; }
-        .value { font-size: 15px; font-weight: 700; color: #fff; }
-        .copy-btn {
-            background: none; border: none; color: var(--voza-gold);
-            cursor: pointer; font-size: 16px; padding: 5px;
+
+        .info-tile:hover {
+            background: rgba(219, 180, 69, 0.05);
+            border-color: var(--voza-gold);
         }
+
+        .info-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tile-label {
+            font-size: 10px;
+            color: var(--voza-gold);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .tile-value {
+            font-size: 17px;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .copy-icon-btn {
+            background: rgba(219, 180, 69, 0.1);
+            border: none;
+            color: var(--voza-gold);
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: 0.2s;
+        }
+
+        .copy-icon-btn:active {
+            transform: scale(0.9);
+        }
+
+        /* END IMPROVEMENTS */
+
         .instructions {
             font-size: 12px;
             color: #fff;
@@ -101,6 +148,7 @@
             align-items: center;
             gap: 10px;
         }
+
         .swal-warning-popup {
             background: #150b2e !important;
             border: 2px solid var(--voza-red) !important;
@@ -123,32 +171,37 @@
         <p style="font-size: 12px; color: #a1a1aa;">(₦12,650 Activation Fee)</p>
     </div>
 
-    <div class="bank-card">
-        <div class="detail-row">
-            <div>
-                <span class="label">Bank Name</span>
-                <div class="value" id="bank-name">MONIEPOINT MFB</div> 
+    <div class="bank-details-container">
+        <div class="info-tile">
+            <div class="info-content">
+                <span class="tile-label">Bank Name</span>
+                <span class="tile-value" id="bank-name">MONIEPOINT MFB</span>
             </div>
-            <button class="copy-btn" onclick="copyText('bank-name')"><i class="fa-regular fa-copy"></i></button>
-        </div>
-        
-        <div class="detail-row">
-            <div>
-                <span class="label">Account Number</span>
-                <div class="value" id="acc-num">6554495300</div> 
-            </div>
-            <button class="copy-btn" onclick="copyText('acc-num')"><i class="fa-regular fa-copy"></i></button>
+            <button class="copy-icon-btn" onclick="copyText('bank-name')">
+                <i class="fa-regular fa-copy"></i>
+            </button>
         </div>
 
-        <div class="detail-row">
-            <div>
-                <span class="label">Account Name</span>
-                <div class="value" id="acc-name">Ominipay - DIVINEFAVOUR C. IYIELE</div>
+        <div class="info-tile">
+            <div class="info-content">
+                <span class="tile-label">Account Number</span>
+                <span class="tile-value" id="acc-num" style="font-size: 22px; color: var(--voza-gold);">6554495300</span>
             </div>
-            <button class="copy-btn" onclick="copyText('acc-name')"><i class="fa-regular fa-copy"></i></button>
+            <button class="copy-icon-btn" onclick="copyText('acc-num')">
+                <i class="fa-regular fa-copy"></i>
+            </button>
+        </div>
+
+        <div class="info-tile">
+            <div class="info-content">
+                <span class="tile-label">Account Name</span>
+                <span class="tile-value" id="acc-name" style="font-size: 14px;">Ominipay - DIVINEFAVOUR C. IYIELE</span>
+            </div>
+            <button class="copy-icon-btn" onclick="copyText('acc-name')">
+                <i class="fa-regular fa-copy"></i>
+            </button>
         </div>
     </div>
-
     <div class="instructions">
         <strong>⚠️ CRITICAL INSTRUCTION:</strong><br>
         1. Copy the account details above.<br>
@@ -179,6 +232,7 @@
         });
         startTimer();
     };
+
     function startTimer() {
         let time = 600; 
         const timerEl = document.getElementById('timer');
@@ -190,6 +244,7 @@
             if(time > 0) time--;
         }, 1000);
     }
+
     function copyText(id) {
         const text = document.getElementById(id).innerText;
         navigator.clipboard.writeText(text);
@@ -203,6 +258,7 @@
         });
         Toast.fire({ icon: 'success', title: 'Copied!' });
     }
+
     function submitToTelegram() {
         const username = localStorage.getItem('voza_username') || "New Member";
         const message = `Hello Admin, I have paid ₦12,750.%0A%0AUsername: ${username}%0A%0AHere's my paymemt proof.`;
